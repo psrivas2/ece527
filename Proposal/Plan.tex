@@ -1,1 +1,30 @@
 \section{Task Allocation and Overall Plan}
+We have divided our project into the following 5 tasks:
+\begin{enumerate}
+\item \textit{Environmental Setup}: Setup the Xilinx Zedboard and make choice
+evaluate the pros and cons of using a bare-metal OS against using Linux.
+\item \textit{Deployment of OS}: Depending on the choice we make in step 1, we
+would either have to port the bare-metal OS for multicore systems or strip down
+Linux to a simpler OS.
+\item \textit{Communication Interface}: Design and implement the communication
+interface. 
+\item \textit{Implementation of LST}: Implement the LST scheduling algorithm on 
+programmable FPGA. 
+\item \textit{Evaluation}: Performance analysis of LST.
+\end{enumerate}
+We have a strong team to bring this project to fruition. We have divided
+the tasks among ourselves in a manner which would allow us to make progress in
+our respective tasks in parallel. Renato Mancuso, with his strong background in
+real time operating systems would carry out tasks 1 and 2. While, during the
+same phase,
+Prakalp Srivastava would work on task 3, an efficient FPGA implementation of LST. Once
+completed, we would work together on the design and implementation of
+communication interface between the OS and the scheduler and subsequently
+proceed to evaluation of our design.
+
+In the interest of time, we have limited the goals of this project to performance
+evaluation of LST. However, we also plan to pursue this work beyond the course
+timeline and evaluate
+the power benefits of hardware LST over Pfair and software implementations of
+LST. 
+

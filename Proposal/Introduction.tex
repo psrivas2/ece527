@@ -1,1 +1,76 @@
 \section{Introduction: background, related work, motivation}
+
+An increasing demand for high-performance systems has been observed in
+the domain of both general purpose and real-time/safety-critical
+systems. Overall, the devices involved range from desktop computers,
+to data-centers, and smarphones to embedded platforms. Among all the
+different system configurations, purposes and platforms, the problem
+of scheduling workload unts on processing units is a common and
+crucial point. Scheduling techniques have been extensively studied and
+implemented in real systems. However, while heavy duty processing
+algorithms (like video compression) have been promoted to first-class
+system components and often implemented as a co-processor, schedulers
+have been traditionally implemented in software at an OS-level. As a
+result, little work has been done on exploring the potentiality of
+hardware components as system schedulers.
+
+The demand for high-performance systems has determined an almost total
+transition to multi-core platforms. Unfortunately, many of the
+scheduling results that are valid for single-core systems are not
+applicable to multi-core, or exhibit sub-optimal performance if ported
+outside the single-core domain. This is true for two main reasons: 
+
+\begin{enumerate}
+\item Scheduling anomalies
+\item Resource sharing
+\end{enumerate}
+
+Specifically, a scheduling anomaly occurs when a positive (or
+negative) change in the parameters of a given taskset results in a
+negative (or positive) effect on the schedulability of the task
+set. For example, an increase in the period of a task which results in
+a lower overall CPU utilization makes a previously schedulable taskset
+not schedulable anymore. Schduling anomalies are known to affect
+single-core algorithms (EDF, RM, DM) that are extended to multi-core
+systems in both a partitioned approach~\cite{graham1972,
+  andersson2003} and a global approach~\cite{andersson2003}. As a
+result, the class of algorithms that are optimal for multi-core does
+not intersect with the class of scheduling algorithms with fixed
+priority at job level~\cite{andersson2003} and that can be easily
+implemented in an event-driven fashion. This implies that, in order to
+achieve optimal scheduling solution for multi-core systems, more
+complex algorithms need to be implemented, such as Pfair and
+Least Slack Time First (LST).
+
+Even though these algorithms are able to generate on-line an optimal
+global schedule for multi-core systems, their complexity and
+computational overhead makes them impractical to be implemented at an
+OS-level with a fine granularity. In this work, we explore the
+possibilities offered by modern architectures to implement LST on a
+dedicated hardware module that interacts directly with embedded
+processors fully dedicated to process useful workload. 
+
+The problem of resource sharing across different cores of the same
+system is an additional source of unpredictability. In fact,
+calculating the worst case execution time (WCET) for a given job of a
+task is not possible without accounting for the activity of other
+cores on DRAM, I/O peripherals and shared CPU caches. Thus, additional
+resource management mechanisms need to be set in place to perform
+temporal and spatial reservation~\cite{memguard,
+  cachecl}. Unfortuantely, actively accounting for resource usage and
+computing fair, priority-aware sharing policies that affect scheduling
+decisions at an OS-level can incur in unacceptable overheads. An
+hardware scheduler can alleviate the problem by directly observing
+the peripheral/bus behavior and adjustng its internal scheduling
+policy accordingly.
+
+The main challenge that has limited the implementation of hardware
+schedulers is re-configurability. Specifically, the behavior of
+scheduler is heavily dependent on the workload of the system; it has
+to know the parameters of the single tasks being executed on the given
+platform and has to be flexible enough to change in operational modes
+(for example, which scheduling algorithm is being used). To address
+this problem, we propose using a hybrid platform composed of embedded
+ARM processors and an FPGA. This way, the FPGA can be used to
+implement a fast, low power, low overhead scheduling module that can
+be reconfigured at runtime by the application cores.
